@@ -1,0 +1,94 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Дополнительные iOS стили для мягкого скролла */
+@supports (-webkit-touch-callout: none) {
+  /* Улучшаем скролл для всех скроллируемых элементов */
+  .main {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: auto;
+    overscroll-behavior-y: auto;
+  }
+  
+  .layout {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Предотвращаем только крайний overscroll, но позволяем нормальный скролл */
+  .scrollable-content {
+    overscroll-behavior: auto;
+    overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Dev signature styles - fixed at bottom */
+.devSignature {
+  margin-bottom: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  
+  span {
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .devLink {
+    color: #cc2855;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-block;
+  }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .devSignature {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .devSignature {
+    padding: 0.3rem 0.25rem;
+    font-size: 0.7rem;
+  }
+}

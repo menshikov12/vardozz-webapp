@@ -1,0 +1,44 @@
+.button {
+    background: transparent;
+    width: 100%;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: "Unbounded", serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    outline: none;
+    border: 1px solid #282828;
+    box-shadow: 0 4px 12px rgba(46, 47, 50, 0.4);
+    
+    // Принудительно устанавливаем белый цвет текста для Safari
+    color: white !important;
+    
+    // Отключаем стандартные стили браузера
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    
+    // Отключаем стандартные стили для ссылок в Safari
+    -webkit-tap-highlight-color: transparent;
+    
+    // Принудительно устанавливаем цвет текста для всех состояний
+    &:hover,
+    &:focus,
+    &:active,
+    &:visited {
+        color: white !important;
+    }
+
+    // Стили для иконок
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.icon {
+    color: white;
+    flex-shrink: 0;
+}

@@ -1,0 +1,367 @@
+.statsContainer {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(30, 30, 30, 0.6) 100%);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+  }
+}
+
+.title {
+  color: #cc2855;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.statCard {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 2px solid rgba(255, 215, 0, 0.2);
+  border-radius: 15px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 215, 0, 0.4);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.2rem;
+    border-radius: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+    border-radius: 10px;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.8rem;
+  }
+}
+
+.statIcon {
+  font-size: 2.5rem;
+  min-width: 60px;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    min-width: 50px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
+    min-width: auto;
+  }
+}
+
+.statContent {
+  flex: 1;
+  
+  @media (max-width: 480px) {
+    text-align: center;
+  }
+}
+
+.statNumber {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.3rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  
+  @media (max-width: 768px) {
+    font-size: 1.6rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
+  }
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+}
+
+.statSubLabel {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+  line-height: 1.2;
+  
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.65rem;
+  }
+}
+
+.statPercentage {
+  font-size: 0.8rem;
+  color: #ffd700;
+  font-weight: 600;
+  
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
+}
+
+// Специальные цвета для разных типов карточек
+.totalCard {
+  border-color: rgba(255, 215, 0, 0.4);
+  
+  &:hover {
+    border-color: rgba(255, 215, 0, 0.6);
+  }
+  
+  .statNumber {
+    color: #ffd700;
+  }
+}
+
+.activeCard {
+  border-color: rgba(40, 167, 69, 0.4);
+  
+  &:hover {
+    border-color: rgba(40, 167, 69, 0.6);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.2);
+  }
+  
+  .statNumber {
+    color: #28a745;
+  }
+}
+
+.weekCard {
+  border-color: rgba(23, 162, 184, 0.4);
+  
+  &:hover {
+    border-color: rgba(23, 162, 184, 0.6);
+    box-shadow: 0 8px 25px rgba(23, 162, 184, 0.2);
+  }
+  
+  .statNumber {
+    color: #17a2b8;
+  }
+}
+
+.monthCard {
+  border-color: rgba(255, 193, 7, 0.4);
+  
+  &:hover {
+    border-color: rgba(255, 193, 7, 0.6);
+    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.2);
+  }
+  
+  .statNumber {
+    color: #ffc107;
+  }
+}
+
+.inactiveCard {
+  border-color: rgba(108, 117, 125, 0.4);
+  
+  &:hover {
+    border-color: rgba(108, 117, 125, 0.6);
+    box-shadow: 0 8px 25px rgba(108, 117, 125, 0.2);
+  }
+  
+  .statNumber {
+    color: #6c757d;
+  }
+}
+
+.neverCard {
+  border-color: rgba(220, 53, 69, 0.4);
+  
+  &:hover {
+    border-color: rgba(220, 53, 69, 0.6);
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.2);
+  }
+  
+  .statNumber {
+    color: #dc3545;
+  }
+}
+
+.refreshInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    padding-top: 1rem;
+  }
+  
+  p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    font-style: italic;
+    
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.refreshButton {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #ffd700;
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 215, 0, 0.2);
+    border-top: 4px solid #ffd700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem auto;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(220, 53, 69, 0.1);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  border-radius: 12px;
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #dc3545;
+    font-weight: bold;
+  }
+  
+  p {
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.retryButton {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

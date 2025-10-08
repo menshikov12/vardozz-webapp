@@ -1,0 +1,1201 @@
+.ncnContainer {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: white;
+    animation: fadeIn 0.8s ease-in-out;
+    padding-bottom: 8rem;
+    
+    /* iOS overscroll prevention */
+    overscroll-behavior: none;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+    
+    /* Предотвращаем жесткий скролл на iOS */
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Дополнительная защита от закрытия приложения на iOS */
+    position: relative;
+    min-height: 100vh;
+    touch-action: pan-y pinch-zoom;
+    
+    /* Предотвращаем закрытие приложения при свайпе вверх */
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    
+    /* Улучшаем прокрутку на iOS */
+    scroll-behavior: smooth;
+    -webkit-scroll-behavior: smooth;
+}
+
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .ncnContainer {
+        /* Фиксируем контейнер для предотвращения закрытия приложения */
+        position: relative;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        
+        /* Строгая защита от закрытия приложения */
+        overscroll-behavior: contain;
+        overscroll-behavior-y: contain;
+        overscroll-behavior-x: none;
+        
+        /* Предотвращаем жесткий overscroll */
+        -webkit-overflow-scrolling: touch;
+        
+        /* Дополнительная защита от закрытия приложения */
+        touch-action: pan-y pinch-zoom;
+        
+        /* Блокируем pull-to-refresh и другие жесты закрытия */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
+    }
+    
+    .swipeContainer {
+        /* Специальные настройки для iOS */
+        touch-action: pan-y pinch-zoom;
+        -webkit-overflow-scrolling: touch;
+        
+        /* Предотвращаем случайное закрытие при горизонтальном свайпе */
+        &.swipeActive {
+            touch-action: none;
+        }
+    }
+    
+    /* Дополнительная защита на уровне body для iOS */
+    body {
+        overscroll-behavior-y: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y pinch-zoom;
+        scroll-behavior: smooth;
+        -webkit-scroll-behavior: smooth;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+        -webkit-scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
+    }
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 83vh;
+    
+    .mainTitle {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #cc2855;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        margin-bottom: 1rem;
+        animation: fadeIn 0.5s ease-in-out;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        
+        &.fadeOut {
+            animation: fadeOut 0.5s ease-in-out;
+        }
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-style: italic;
+        animation: fadeIn 0.5s ease-in-out;
+        
+        &.fadeOut {
+            animation: fadeOut 0.5s ease-in-out;
+        }
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    
+    h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #cc2855;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        animation: fadeIn 0.5s ease-in-out;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
+    .subtitle {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 400;
+        margin-bottom: 1rem;
+        animation: fadeIn 0.7s ease-in-out;
+    }
+    
+    .mainTitle {
+        font-size: 1.8rem;
+        color: #ff6b6b;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        animation: fadeIn 0.9s ease-in-out;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .challenge {
+        font-size: 1.2rem;
+        color: #4ecdc4;
+        font-weight: bold;
+        animation: fadeIn 1.1s ease-in-out;
+        text-transform: uppercase;
+    }
+}
+
+// Прогресс-бар
+.progressBar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    position: relative;
+    
+    .progressFill {
+        height: 100%;
+        background: linear-gradient(90deg, #cc2855, #cc2855);
+        border-radius: 4px;
+        transition: width 0.5s ease-in-out;
+        position: relative;
+        
+        &.completed {
+            background: linear-gradient(90deg, #00d4aa, #00ff88);
+            box-shadow: 0 0 30px rgba(0, 212, 170, 0.7);
+            
+            &::before {
+                background: linear-gradient(90deg, #00d4aa, #00ff88, #00d4aa);
+            }
+        }
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, #cc2855, #cc2855, #cc2855);
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease-in-out infinite;
+        }
+        
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+    }
+    
+    .progressUnfilled {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        background: rgba(128, 128, 128, 0.6);
+        border-radius: 0 4px 4px 0;
+        animation: fadeInOut 2s ease-in-out infinite;
+    }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes gradientMove {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+// Контейнер для свайпа
+.swipeContainer {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    touch-action: pan-y pinch-zoom; // Разрешаем вертикальный скролл и зум, но не горизонтальный
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Дополнительная защита от случайного закрытия приложения */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: auto;
+    overscroll-behavior-x: none;
+    
+    // Плавное затемнение при свайпе
+    &.swipeActive {
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+    }
+    
+    // Эффект "резинки" на краях
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -10px;
+        right: -10px;
+        bottom: 0;
+        background: linear-gradient(
+            90deg,
+            rgba(204, 40, 85, 0.3) 0%,
+            transparent 5%,
+            transparent 95%,
+            rgba(204, 40, 85, 0.3) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 2;
+    }
+    
+    &.swipeActive::after {
+        opacity: 1;
+    }
+    
+    // Состояние во время слайдинга
+    &.sliding {
+        .slide {
+            will-change: transform, opacity;
+        }
+    }
+}
+
+// Стили для слайдов
+.slide {
+    width: 100%;
+    position: relative;
+    
+    &.currentSlide {
+        position: relative;
+        z-index: 2;
+    }
+    
+    &.nextSlide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
+}
+
+// Анимации выхода текущего слайда
+.slideOutLeft {
+    animation: slideOutToLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slideOutRight {
+    animation: slideOutToRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+// Анимации входа нового слайда
+.slideInLeft {
+    animation: slideInFromLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slideInRight {
+    animation: slideInFromRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+// Keyframes для анимаций
+@keyframes slideOutToLeft {
+    0% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-100%) scale(0.9);
+        opacity: 0;
+    }
+}
+
+@keyframes slideOutToRight {
+    0% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%) scale(0.9);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%) scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%) scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.monthsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    padding: 0 0.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    
+    // Добавляем плавность для анимаций свайпа
+    transform-origin: center;
+    will-change: transform;
+}
+
+// Обновленные стили для слайдов внутри контейнера
+.slide {
+    .monthsGrid {
+        // Убираем margin-bottom для слайдов, чтобы избежать лишних отступов
+        margin-bottom: 0;
+    }
+}
+
+.monthCard {
+    border-radius: 20px;
+    border: 2px solid rgb(198 69 69 / 30%);
+    padding: 2rem;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(15px);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    
+    // Добавляем плавность для свайпа
+    will-change: transform, opacity;
+    transform-origin: center;
+
+    &.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    // Отключение анимации появления
+    &.noAnimation {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        transition: none !important;
+        animation: none !important;
+    }
+
+    &:hover::before {
+        opacity: 1;
+    }
+    
+    // Эффект при свайпе
+    .swipeActive & {
+        transition: transform 0.1s ease-out;
+        
+        &.swipeDirection {
+            transform: scale(0.98) rotateY(2deg);
+        }
+    }
+}
+
+.monthHeader {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.monthNumber {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #cc2855;
+    margin-bottom: 0.5rem;
+}
+
+.monthTitle {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.monthDescription {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+    text-align: left;
+}
+
+
+
+.descriptionBlock, .pointsBlock, .firstOrdersBlock, .realProjectsBlock, .supportBlock, .lastChanceBlock {
+    border: 2px solid rgb(198 69 69 / 30%);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    
+    .blockTitle {
+        text-align: center !important;
+        font-weight: bold;
+        color: #cc2855;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .blockContent {
+        text-align: left;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.9rem;
+        line-height: 1.5;
+        white-space: break-spaces;
+    }
+}
+
+.pointsList {
+    margin-bottom: 0;
+}
+
+.point {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    text-align: left;
+    .pointBullet {
+        color: #cc2855;
+        font-weight: bold;
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+    
+    span:last-child {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.9rem;
+    }
+}
+
+.resultTitle {
+    text-align: center !important;
+    font-weight: bold;
+    color: #cc2855;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    text-decoration: underline;
+    white-space: break-spaces;
+}
+
+.result {
+    border: 2px solid rgb(198 69 69 / 30%);
+    border-radius: 10px;
+    padding: 1rem;
+    
+    .resultContent {
+        text-align: left;
+        font-size: 0.9rem;
+        
+        span {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+    }
+}
+
+.finalStep {
+    border: 2px solid rgb(198 69 69 / 30%);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    transition: all 0.4s ease;
+    position: relative;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+
+    &.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    // Отключение анимации появления
+    &.noAnimation {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+.finalContent {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.finalTitle {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #d40248;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer {
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    border: 2px solid rgba(255,215,0,0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    transition: all 0.4s ease;
+    position: relative;
+    margin-bottom: 6rem;
+    
+    &:hover {
+        border-color: rgba(255,215,0,0.6);
+        box-shadow: 0 20px 40px rgba(255,215,0,0.2);
+    }
+}
+
+.footerContent {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footerTitle {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #d40248;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.benefits {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.benefit {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    
+    .benefitIcon {
+        color: #cc2855;
+        font-weight: bold;
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+    
+    span:last-child {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1rem;
+    }
+}
+
+.cta {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.ctaText {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.ctaButton {
+    display: inline-block;
+    background: linear-gradient(135deg, #cc2855 0%, #ff6b6b 100%);
+    color: #000000;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+    margin-bottom: 2.5rem;
+    width: 100%;
+    max-width: 200px;
+    
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(255,215,0,0.4);
+        text-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+}
+
+.navButton {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid rgba(204, 40, 85, 0.3);
+    background: rgba(204, 40, 85, 0.1);
+    color: #cc2855;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 4px 20px rgba(204, 40, 85, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #cc2855, #ff6b6b, #cc2855);
+        background-size: 200% 200%;
+        animation: pulseGlow 3s ease-in-out infinite;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+    }
+
+    &:hover {
+        transform: translateY(-50%) scale(1.1);
+        border-color: rgba(204, 40, 85, 0.6);
+        background: rgba(204, 40, 85, 0.2);
+        box-shadow: 
+            0 8px 30px rgba(204, 40, 85, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+        &::before {
+            opacity: 0.3;
+        }
+    }
+
+    &:active {
+        transform: translateY(-50%) scale(0.95);
+        transition: all 0.1s ease;
+    }
+
+    svg {
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+
+    &:hover svg {
+        transform: scale(1.1);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    }
+}
+
+.navButtonLeft {
+    left: 15px;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.navButtonRight {
+    right: 15px;
+    animation: slideInRight 0.5s ease-out;
+}
+
+.navButtonDisabled {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) scale(0.8);
+    transition: all 0.3s ease;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-30px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0) scale(1);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(30px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0) scale(1);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        background-position: 0% 50%;
+        transform: scale(1);
+    }
+    50% {
+        background-position: 100% 50%;
+        transform: scale(1.05);
+    }
+    100% {
+        background-position: 0% 50%;
+        transform: scale(1);
+    }
+}
+
+// Адаптивность для мобильных устройств
+@media (max-width: 768px) {
+    .ncnContainer {
+        padding: 0.5rem;
+        
+        // Оптимизация для свайпа на мобильных
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .swipeContainer {
+        // Улучшенная чувствительность свайпа на мобильных
+        touch-action: pan-y;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        
+        // Более выраженные визуальные эффекты на мобильных
+        &.swipeActive {
+            &::before {
+                background: rgba(0, 0, 0, 0.15);
+            }
+            
+            &::after {
+                background: linear-gradient(
+                    90deg,
+                    rgba(204, 40, 85, 0.5) 0%,
+                    transparent 3%,
+                    transparent 97%,
+                    rgba(204, 40, 85, 0.5) 100%
+                );
+            }
+        }
+        
+        // Оптимизированные анимации для мобильных
+        &.sliding {
+            .slide {
+                // Ускоренные анимации на мобильных
+                &.slideOutLeft,
+                &.slideOutRight,
+                &.slideInLeft,
+                &.slideInRight {
+                    animation-duration: 0.35s;
+                    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                }
+            }
+        }
+    }
+    
+    // Мобильные версии анимаций
+    @keyframes slideOutToLeftMobile {
+        0% {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(-110%) scale(0.95);
+            opacity: 0;
+        }
+    }
+
+    @keyframes slideInFromLeftMobile {
+        0% {
+            transform: translateX(-110%) scale(0.95);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOutToRightMobile {
+        0% {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(110%) scale(0.95);
+            opacity: 0;
+        }
+    }
+
+    @keyframes slideInFromRightMobile {
+        0% {
+            transform: translateX(110%) scale(0.95);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+        }
+    }
+    
+    // Применяем мобильные анимации
+    .swipeContainer.sliding {
+        .slideOutLeft {
+            animation-name: slideOutToLeftMobile;
+        }
+        
+        .slideInLeft {
+            animation-name: slideInFromLeftMobile;
+        }
+        
+        .slideOutRight {
+            animation-name: slideOutToRightMobile;
+        }
+        
+        .slideInRight {
+            animation-name: slideInFromRightMobile;
+        }
+    }
+    
+    .header {
+        margin-bottom: 2rem;
+        padding: 1rem 0;
+        
+        h1 {
+            font-size: 2rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .mainTitle {
+            font-size: 1.4rem;
+        }
+        
+        .challenge {
+            font-size: 1rem;
+        }
+    }
+    
+    .monthsGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0;
+        
+        // Добавляем отступы для мобильного свайпа
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    .monthCard {
+        padding: 1.5rem;
+        
+        // Улучшенная анимация для мобильных
+        .swipeActive & {
+            transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+            
+            &.swipeDirection {
+                transform: scale(0.96) rotateY(3deg);
+                box-shadow: 0 8px 25px rgba(204, 40, 85, 0.3);
+            }
+        }
+    }
+    
+    .monthTitle {
+        font-size: 0.8rem;
+    }
+    
+    .monthDescription {
+        font-size: 1rem;
+    }
+    
+    .footer {
+        padding: 1.5rem;
+    }
+    
+    .footerTitle {
+        font-size: 1.2rem;
+    }
+    
+    .finalStep {
+        margin-bottom: 2rem;
+        
+        // Эффекты свайпа для финального шага
+        .swipeActive & {
+            transition: transform 0.15s ease-out;
+            
+            &.swipeDirection {
+                transform: scale(0.98) translateY(5px);
+                box-shadow: 0 10px 30px rgba(204, 40, 85, 0.2);
+            }
+        }
+    }
+    
+    .finalContent {
+        padding: 1.5rem;
+    }
+    
+    .finalTitle {
+        font-size: 1.2rem;
+    }
+    
+    .ctaButton {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .navButton {
+        width: 35px;
+        height: 34px;
+        font-size: 1.1rem;
+        
+        // Более мягкая анимация на мобильных при свайпе
+        .swipeActive & {
+            opacity: 0.7;
+            transform: translateY(-50%) scale(0.9);
+            transition: all 0.2s ease;
+        }
+        
+        &.navButtonLeft {
+            left: 5px;
+        }
+        
+        &.navButtonRight {
+            right: 5px;
+        }
+    }
+    
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+} 
+
+
+.content {
+    &.fadeIn {
+        animation: fadeIn 0.8s ease-in-out;
+    }
+} 
+
+
+/* Стили для стрелки-указателя */
+.guideArrow {
+    position: absolute;
+    top: -62px;
+    left: 83%;
+    transform: rotate(-44deg);
+    z-index: 10;
+}
+
+.arrowImage {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Стили для контейнера кнопки */
+.buttonContainer {
+    width: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+/* Индикаторы свайпа */
+.swipeIndicator {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(204, 40, 85, 0.9);
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(204, 40, 85, 0.4);
+    animation: swipeIndicatorPulse 0.3s ease-out;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    
+    svg {
+        flex-shrink: 0;
+    }
+    
+    span {
+        white-space: nowrap;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    &.swipeLeft {
+        left: 20px;
+        transform: translateY(-50%) translateX(0);
+        
+        svg {
+            animation: bounceLeft 0.6s ease-in-out infinite;
+        }
+    }
+    
+    &.swipeRight {
+        right: 20px;
+        transform: translateY(-50%) translateX(0);
+        
+        svg {
+            animation: bounceRight 0.6s ease-in-out infinite;
+        }
+    }
+}
+
+@keyframes swipeIndicatorPulse {
+    0% {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+@keyframes bounceLeft {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-3px);
+    }
+}
+
+@keyframes bounceRight {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(3px);
+    }
+}
+
+// Мобильная версия индикаторов
+@media (max-width: 768px) {
+    .swipeIndicator {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+        border-radius: 20px;
+        
+        &.swipeLeft {
+            left: 10px;
+        }
+        
+        &.swipeRight {
+            right: 10px;
+        }
+        
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}

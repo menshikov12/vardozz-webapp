@@ -1,0 +1,556 @@
+.prodContent {
+    text-align: center;
+    min-height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.8s ease-in-out;
+    
+    h2 {
+        margin-top: 2rem;
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        margin-bottom: 2rem;
+        color: #cc2855;
+    }
+    
+    .titleContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 83vh;
+        
+        .mainTitle {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #cc2855;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+            animation: fadeIn 0.5s ease-in-out;
+            
+            &.fadeOut {
+                animation: fadeOut 0.5s ease-in-out;
+            }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            animation: fadeIn 0.5s ease-in-out;
+            
+            &.fadeOut {
+                animation: fadeOut 0.5s ease-in-out;
+            }
+        }
+    }
+    
+    .content {
+        max-width: 800px;
+        margin: 0 auto;
+        
+        &.fadeIn {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        .mainTitle {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #cc2855;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        
+        .section {
+            margin-bottom: 2.5rem;
+            text-align: left;
+            
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgb(198 69 69 / 30%);
+            transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            
+            &.visible {
+                opacity: 1;
+                transform: translateY(0);
+                transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            }
+            
+            &:hover {
+                transform: translateY(-5px);
+            }
+
+            h4 {
+                text-align: center;
+            }
+            
+            h3 {
+                font-size: 1.4rem;
+                font-weight: bold;
+                margin-bottom: 1rem;
+                text-align: center;
+                color: #cc2855;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                
+                .emoji {
+                    font-size: 1.2rem;
+                }
+            }
+            
+            h4 {
+                font-size: 1.2rem;
+                font-weight: bold;
+                margin: 1.5rem 0 0.8rem 0;
+                color: #cc2855;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+                border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+                padding-bottom: 0.5rem;
+            }
+            
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                
+                li {
+                    font-size: 1rem;
+                    line-height: 1.6;
+                    margin-bottom: 0.8rem;
+                    padding-left: 1.5rem;
+                    position: relative;
+                    
+                    &::before {
+                        content: "•";
+                        color: #cc2855;
+                        font-weight: bold;
+                        position: absolute;
+                        left: 0;
+                        font-size: 1.2rem;
+                    }
+                    
+                    strong {
+                        color: #cc2855;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+        
+        .readySection {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid rgb(198 69 69 / 30%);
+            backdrop-filter: blur(10px);
+            
+            .readyTitle {
+                font-size: 1.8rem;
+                font-weight: bold;
+                color: #cc2855;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+                margin-bottom: 1rem;
+                min-height: 2.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                text-align: center;
+                
+                // Анимация для поочередного появления текста
+                span {
+                    display: inline-block;
+                    margin: 0;
+                    transition: all 0.3s ease-in-out; // Уменьшаем с 0.5s до 0.3s для более быстрой анимации
+                    
+                    &.textFadeIn {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                        color: #cc2855;
+                        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+                    }
+                    
+                    &.textFadeOut {
+                        opacity: 0;
+                        transform: translateY(-15px) scale(0.85);
+                        color: #fff;
+                        text-shadow: 0 0 0 rgba(0,0,0,0);
+                    }
+                }
+                
+                .animatedText {
+                    display: inline-block;
+                    position: relative;
+                    color: #cc2855;
+                    font-weight: bold;
+                    min-width: 120px;
+                    text-align: left;
+                }
+                
+                .cursor {
+                    animation: blink 1s infinite;
+                    color: #cc2855;
+                    font-weight: bold;
+                }
+            }
+            
+            .readySubtitle {
+                p {
+                    font-size: 1.2rem;
+                    color: rgba(255, 255, 255, 0.9);
+                    font-style: italic;
+                    margin: 0;
+                }
+            }
+        }
+        
+        .specialSection {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+            border: 2px solid #cc2855;
+            
+            h3 {
+                color: #cc2855;
+                font-size: 1.6rem;
+            }
+        }
+        
+        .contactInfo {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #cc2855;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            
+            h3 {
+                color: #cc2855;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin-bottom: 1rem;
+                
+                strong {
+                    color: #cc2855;
+                }
+            }
+            
+        }
+        
+    }
+}
+
+// Общий стиль для выделения цены
+.highlightPrice {
+    color: #cc2855 !important;
+    font-weight: bold !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
+}
+
+@keyframes activeText {
+    0% {
+        transform: scale(1) translateY(0);
+        color: #cc2855;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    25% {
+        transform: scale(1.05) translateY(-2px);
+        color: #fff;
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    50% {
+        transform: scale(1.1) translateY(-3px);
+        color: #cc2855;
+        text-shadow: 0 0 25px rgba(255, 215, 0, 1), 3px 3px 6px rgba(0,0,0,0.6);
+    }
+    75% {
+        transform: scale(1.05) translateY(-2px);
+        color: #fff;
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        color: #cc2855;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+}
+
+@keyframes textAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+        color: #cc2855;
+        text-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    20% {
+        opacity: 0.3;
+        transform: translateY(15px) scale(0.9);
+        color: #cc2855;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    40% {
+        opacity: 0.7;
+        transform: translateY(8px) scale(0.95);
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    }
+    60% {
+        opacity: 0.9;
+        transform: translateY(3px) scale(1.02);
+        color: #cc2855;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        color: #cc2855;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        color: #cc2855;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+}
+
+@keyframes activeTextMobile {
+    0% {
+        transform: scale(1) translateY(0);
+        color: #cc2855;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    25% {
+        transform: scale(1.03) translateY(-1px);
+        color: #fff;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    50% {
+        transform: scale(1.06) translateY(-2px);
+        color: #cc2855;
+        text-shadow: 0 0 20px rgba(255, 215, 0, 1), 2px 2px 4px rgba(0,0,0,0.6);
+    }
+    75% {
+        transform: scale(1.03) translateY(-1px);
+        color: #fff;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        color: #cc2855;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+}
+
+@keyframes textAppearMobile {
+    0% {
+        opacity: 0;
+        transform: translateY(15px) scale(0.85);
+        color: #cc2855;
+        text-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    20% {
+        opacity: 0.4;
+        transform: translateY(12px) scale(0.9);
+        color: #cc2855;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    40% {
+        opacity: 0.8;
+        transform: translateY(6px) scale(0.95);
+        color: #fff;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    }
+    60% {
+        opacity: 0.95;
+        transform: translateY(2px) scale(1.01);
+        color: #cc2855;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        color: #cc2855;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        color: #cc2855;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+}
+
+// Мобильная адаптация
+@media (max-width: 768px) {
+    .prodContent {
+        .titleContainer {
+            .mainTitle {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .content {
+            .mainTitle {
+                font-size: 1.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .readySection {
+                padding: 1.5rem;
+                margin: 2rem 0;
+                
+                .readyTitle {
+                    font-size: 1.2rem;
+                    min-height: 2rem;
+                    
+                    span {
+                        margin: 0;
+                        transition: all 0.3s ease-in-out; // Уменьшаем с 0.5s до 0.3s для более быстрой анимации
+                        
+                        &.textFadeIn {
+                            opacity: 1;
+                            transform: translateY(0) scale(1);
+                            color: #cc2855;
+                            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+                        }
+                        
+                        &.textFadeOut {
+                            opacity: 0;
+                            transform: translateY(-15px) scale(0.85);
+                            color: #fff;
+                            text-shadow: 0 0 0 rgba(0,0,0,0);
+                        }
+                    }
+                    
+                    .animatedText {
+                        min-width: 100px;
+                        font-size: 1.5rem;
+                    }
+                }
+                
+                .readySubtitle p {
+                    font-size: 1.1rem;
+                }
+            }
+            
+            .section {
+                padding: 1rem;
+                
+                h3 {
+                    font-size: 1.2rem;
+                }
+                
+                ul li {
+                    font-size: 0.9rem;
+                    padding-left: 1.2rem;
+                }
+            }
+            
+            .contactInfo {
+                padding: 1.5rem;
+                
+                h3 {
+                    font-size: 1.3rem;
+                }
+                
+                p {
+                    font-size: 1rem;
+                }
+            }
+            
+            .devSignature {
+                font-size: 0.8rem;
+                margin-top: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+} 
+
+// Стили для стрелки-указателя
+.guideArrow {
+    position: absolute;
+    top: -70%;
+    right: 54px;
+    transform: rotate(-57deg);
+    width: 50px;
+    height: 30px;
+    pointer-events: none;
+    z-index: 1001;
+    opacity: 1;
+    visibility: visible;
+    
+    .arrowImage {
+        color: #cc2855;
+    }
+}
+
+// Мобильная адаптация для стрелки
+@media (max-width: 768px) {
+    .guideArrow {
+        width: 40px;
+        height: 25px;
+    }
+} 

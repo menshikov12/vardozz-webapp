@@ -1,0 +1,1455 @@
+.roadmapWrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    
+    /* iOS Safari overscroll fixes - используем те же настройки что и в глобальных стилях */
+    overscroll-behavior: auto;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+    
+    /* Предотвращаем жесткий скролл на iOS */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Правильное управление touch событиями */
+    touch-action: pan-y;
+}
+
+// Стили для прогресс-бара
+.progressBar {
+    max-width: 400px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 0 auto 2rem auto;
+    
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, #cc2855, #cc2855);
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), background 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(204, 40, 85, 0.5);
+    
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        animation: shimmer 2s infinite;
+    }
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, #cc2855, #cc2855, #cc2855);
+        background-size: 200% 100%;
+        animation: gradientMove 3s ease-in-out infinite;
+    }
+    
+    // Специальный стиль для 100% прогресса
+    &.completed {
+        background: linear-gradient(90deg, #00d4aa, #00ff88);
+        box-shadow: 0 0 30px rgba(0, 212, 170, 0.7);
+        
+        &::before {
+            background: linear-gradient(90deg, #00d4aa, #00ff88, #00d4aa);
+        }
+    }
+}
+
+.progressText {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    
+    &:hover {
+        color: rgba(255, 255, 255, 1);
+        text-shadow: 0 2px 8px rgba(204, 40, 85, 0.5);
+    }
+    
+    // Анимация при смене текста
+    &.changing {
+        animation: textPulse 0.4s ease-in-out;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes gradientMove {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes textPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+    
+    .stepsContainer {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+        
+        /* iOS Safari overscroll fixes - используем мягкие настройки */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: auto;
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: auto;
+        
+        /* Предотвращаем жесткий скролл */
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+        
+        /* Правильное управление touch событиями */
+        touch-action: pan-y;
+        
+        .step {
+            border-radius: 20px;
+            z-index: 1;
+            padding: 2rem;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgb(198 69 69 / 30%);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            max-width: calc(100% - 5rem);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            width: 100%;
+            margin: 0 auto;
+            
+            &.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            // Для шагов, которые не являются первыми, сразу показываем без анимации
+            &:not(.step1) {
+                opacity: 1;
+                transform: translateY(0);
+                transition: none;
+            }
+            
+            // Специальный класс для первого шага (с анимацией)
+            &.step1 {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+                
+                &.visible {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            // Отключение анимации появления для всех шагов кроме первого
+            &.noAnimation {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+                transition: none !important;
+                animation: none !important;
+            }
+            
+            // Специальный класс для шага 5 (последнего)
+            &.step5 {
+                max-width: calc(100% - 5rem);
+                
+                // Только для последнего шага оставляем нижние строчки
+                .stepPoints .stepPoint:not(:last-child) {
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                }
+            }
+            
+            .stepHeader {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                margin-bottom: 1.5rem;
+                
+                .stepNumber {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    background: linear-gradient(45deg, rgb(196, 73, 73), #841d1d);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    color: white;
+                    box-shadow: 0 4px 15px rgba(102, 102, 102, 0.3);
+                }
+                
+                .stepInfo {
+                    flex: 1;
+                    text-align: left;
+                    
+                    .stepTitle {
+                        font-size: 1.8rem;
+                        font-weight: bold;
+                        color: #cc2855;
+                        margin-bottom: 0.5rem;
+                        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+                    }
+                    
+                    .stepSubtitle {
+                        font-size: 0.9rem;
+                        color: rgba(255,255,255,0.9);
+                        font-weight: 500;
+                        line-height: 1.4;
+                    }
+                }
+            }
+            
+            .stepPoints {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                text-align: left;
+                
+                .stepPoint {
+                    position: relative;
+                    padding: 0.8rem 0 0.8rem 2rem;
+                    font-size: 1rem;
+                    color: rgba(255,255,255,0.9);
+                    line-height: 1.5;
+                    
+                    &::before {
+                        content: '✓';
+                        position: absolute;
+                        left: 0;
+                        top: 0.8rem;
+                        color: #cc2855;
+                        font-weight: bold;
+                        font-size: 1.1rem;
+                        text-shadow: 0 0 10px rgba(255, 237, 78, 0.5);
+                    }
+                    
+                    // Убираем нижние строчки для всех шагов кроме последнего
+                    &:not(:last-child) {
+                        border-bottom: none;
+                    }
+                }
+            }
+        }
+    }
+    
+    .finalResult {
+        z-index: 1;
+        background: linear-gradient(135deg, #9a9a991a, #5252520d);
+        border-radius: 20px;
+        padding: 2rem;
+        border: 2px solid rgba(255,255,255,.2);
+        backdrop-filter: blur(15px);
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative; // Добавляем для позиционирования стрелки
+        
+        // Специальный класс для финального результата
+        &.finalResultSpecial {
+            max-width: calc(100% - 5.2rem);
+        }
+        
+        // Отключение анимации появления для финального результата
+        &.noAnimation {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            transition: none !important;
+            animation: none !important;
+        }
+        
+        .resultTitle {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #cc2855;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .resultSubtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .resultDescription {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        
+        .priceSection {
+            .priceTitle {
+                font-size: 1.3rem;
+                color: #cc2855;
+                font-weight: bold;
+                margin-bottom: 1.5rem;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+                white-space: pre-line;
+            }
+            
+            .benefitsList {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                
+                .benefit {
+                    position: relative;
+                    padding: 0.8rem 0 0.8rem 2rem;
+                    font-size: 1rem;
+                    color: rgba(255,255,255,0.9);
+                    line-height: 1.5;
+                    text-align: left;
+                    white-space: pre-line;
+                    
+                    &::before {
+                        content: '→';
+                        position: absolute;
+                        left: -11px;
+                        top: 0.8rem;
+                        color: #cc2855;
+                        font-weight: bold;
+                        font-size: 1.2rem;
+                        text-shadow: 0 0 10px rgba(255, 237, 78, 0.5);
+                    }
+                    
+                    &:not(:last-child) {
+                        border-bottom: 1px solid rgba(255,255,255,0.1);
+                    }
+                }
+            }
+        }
+
+
+    }
+    
+    .targetAudience {
+        background: rgba(255,255,255,0.05);
+        border-radius: 20px;
+        padding: 2rem;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255,255,255,0.1);
+        opacity: 0;
+        margin-bottom: 3rem;
+        transform: translateY(40px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        
+        &.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        // Специальный класс для целевой аудитории
+        &.targetAudienceSpecial {
+            max-width: calc(100% - 5rem);
+        }
+        
+        .audienceTitle {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #cc2855;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .audienceList {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+            
+            .audienceItem {
+                position: relative;
+                padding: 1rem 0 1rem 2.5rem;
+                font-size: 1rem;
+                color: rgba(255,255,255,0.9);
+                line-height: 1.6;
+                text-align: left;
+                
+                &::before {
+                    content: '•';
+                    position: absolute;
+                    left: 0;
+                    top: 1rem;
+                    color: #cc2855;
+                    font-weight: bold;
+                    font-size: 1.5rem;
+                }
+                
+                &:not(:last-child) {
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                }
+            }
+        }
+        
+        .conclusion {
+            border-top: 2px solid rgb(209 209 209 / 30%);
+            padding-top: 2rem;
+            text-align: left;
+            
+            .conclusionText {
+                font-size: 1rem;
+                color: rgba(255,255,255,0.95);
+                margin-bottom: 1rem;
+                line-height: 1.5;
+                font-weight: 500;
+                
+                &:last-child {
+                    font-weight: bold;
+                    color: #cc2855;
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+    
+    .tariffDifferences {
+        opacity: 0;
+        margin-bottom: 3rem;
+        transform: translateY(40px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        
+        &.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .tariffTitle {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #cc2855;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .tariffsContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            
+            .tariffCard {
+                background: rgba(255,255,255,0.08);
+                border-radius: 20px;
+                padding: 2rem;
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255,255,255,0.15);
+                transition: all 0.3s ease;
+                max-width: 250px;
+                margin: 0 auto;
+            }
+        }
+    }
+
+
+
+.buttonContainer {
+    padding: 1rem 1.5rem;
+    
+    /* iOS Safari overscroll fixes - используем мягкие настройки */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: auto;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: auto;
+    
+    /* Предотвращаем жесткий скролл */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Правильное управление touch событиями */
+    touch-action: pan-y;
+    
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
+}
+
+// Стили для анимации основной кнопки - используем fadeIn как у блоков
+.mainButtonWrapper {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.mainButtonVisible {
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.mainButtonStatic {
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
+}
+
+.navButton {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid rgba(204, 40, 85, 0.4);
+    background: rgba(204, 40, 85, 0.15);
+    color: #cc2855;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(204, 40, 85, 0.2);
+    
+    /* iOS Safari overscroll fixes */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+    
+    /* Предотвращаем жесткий скролл */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+        border-color: rgba(204, 40, 85, 0.6);
+        background: rgba(204, 40, 85, 0.2);
+        box-shadow: 0 6px 20px rgba(204, 40, 85, 0.3);
+    }
+
+    svg {
+        transition: all 0.2s ease;
+    }
+}
+
+.navButtonLeft {
+    left: 15px;
+    animation: slideInLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.navButtonRight {
+    right: 15px;
+    animation: slideInRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+
+
+// Мобильная адаптация
+@media (max-width: 768px) {
+    .roadmapWrapper {
+        /* iOS Safari overscroll fixes для мобильных устройств - используем мягкие настройки */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: auto;
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: auto;
+        
+        /* Предотвращаем жесткий скролл */
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+        
+        /* Правильное управление touch событиями для предотвращения закрытия приложения */
+        touch-action: pan-y;
+    }
+    
+    .roadmap {
+        .titleContainer {
+            height: 91vh;
+            
+            .mainTitle {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        .mainTitle {
+            font-size: 1rem;
+        }
+        
+        .stepsContainer {
+            /* iOS Safari overscroll fixes для мобильных устройств - используем мягкие настройки */
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: auto;
+            overscroll-behavior-x: none;
+            overscroll-behavior-y: auto;
+            
+            /* Предотвращаем жесткий скролл */
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            
+            /* Правильное управление touch событиями */
+            touch-action: pan-y;
+            
+            gap: 1.5rem;
+            
+            .step {
+                padding: 1.5rem;
+                margin: 0 1rem;
+                
+                &.step5 {
+                    margin: 0 1rem;
+                }
+                
+                .stepHeader {
+                    gap: 1rem;
+                    
+                    .stepNumber {
+                        width: 50px;
+                        height: 50px;
+                        font-size: 1.3rem;
+                    }
+                    
+                    .stepInfo {
+                        .stepTitle {
+                            font-size: 1.5rem;
+                        }
+                        
+                        .stepSubtitle {
+                            font-size: 0.9rem;
+                        }
+                    }
+                }
+                
+                .stepPoints {
+                    .stepPoint {
+                        font-size: 0.95rem;
+                        padding: 0.6rem 0 0.6rem 1.5rem;
+                    }
+                }
+            }
+        }
+        
+        .finalResult {
+            /* iOS Safari overscroll fixes для мобильных устройств - используем мягкие настройки */
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: auto;
+            overscroll-behavior-x: none;
+            overscroll-behavior-y: auto;
+            
+            /* Предотвращаем жесткий скролл */
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            
+            /* Правильное управление touch событиями */
+            touch-action: pan-y;
+            
+            padding: 1.5rem;
+            max-width: calc(100% - 2rem) !important;
+            margin: 0 1rem;
+            
+            .resultTitle {
+                font-size: 1.5rem;
+                margin-top: 0;
+            }
+            
+            .resultSubtitle {
+                font-size: 1rem;
+                text-align: left;
+            }
+            
+            .resultDescription {
+                text-align: left;
+                font-size: 0.95rem;
+            }
+            
+            .priceSection {
+                .priceTitle {
+                    font-size: 1rem;
+                    text-align: left;
+                    white-space: pre-line;
+                }
+                
+                .benefitsList {
+                    .benefit {
+                        font-size: 0.95rem;
+                        padding: 0.6rem 0 0.6rem 1.5rem;
+                        white-space: pre-line;
+                    }
+                }
+            }
+        }
+    }
+    
+    .navButton {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+        
+        /* iOS Safari overscroll fixes для мобильных устройств - используем мягкие настройки */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: auto;
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: auto;
+        
+        /* Предотвращаем жесткий скролл */
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+        
+        /* Правильное управление touch событиями */
+        touch-action: pan-y;
+        
+        &.navButtonLeft {
+            left: 10px;
+        }
+        
+        &.navButtonRight {
+            right: 10px;
+        }
+    }
+    
+    // Мобильные улучшения для свайпов
+    .stepsContainer {
+        /* Оптимизация для мобильных свайпов - используем только pan-y для iOS */
+        touch-action: pan-y;
+        
+        &.swipeAnimating {
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        &.swipeLeft {
+            transform: translateX(-25px);
+            opacity: 0.8;
+        }
+        
+        &.swipeRight {
+            transform: translateX(25px);
+            opacity: 0.8;
+        }
+        
+        &.dragging {
+            .step, .finalResult {
+                filter: brightness(0.9);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            }
+        }
+    }
+}
+
+/* iOS Safari specific fixes для Roadmap - добавляем специальные настройки как в глобальных стилях */
+@supports (-webkit-touch-callout: none) {
+    .roadmapWrapper {
+        /* Специальные настройки для iOS Safari */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: auto;
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: auto;
+        
+        /* Предотвращаем случайное закрытие приложения */
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: pan-y;
+    }
+    
+    .swipeContainer {
+        /* Мягкие настройки для свайп-контейнера на iOS */
+        overscroll-behavior: auto;
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: auto;
+        touch-action: pan-y;
+    }
+    
+    .stepsContainer, .finalResult, .buttonContainer {
+        /* Все контейнеры используют мягкие настройки */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: auto;
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: auto;
+        touch-action: pan-y;
+    }
+    
+    .navButton {
+        /* Кнопки навигации тоже должны быть безопасными */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: auto;
+        touch-action: pan-y;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+// Стили для свайпа
+.swipeContainer {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    /* Используем только pan-y для предотвращения закрытия приложения на iOS */
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Дополнительная защита от случайного закрытия приложения - используем мягкие настройки */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: auto;
+    overscroll-behavior-x: none;
+    
+    // Плавное затемнение при свайпе
+    &.swipeActive {
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+    }
+    
+    // Эффект "резинки" на краях
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -10px;
+        right: -10px;
+        bottom: 0;
+        background: linear-gradient(
+            90deg,
+            rgba(204, 40, 85, 0.3) 0%,
+            transparent 5%,
+            transparent 95%,
+            rgba(204, 40, 85, 0.3) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 2;
+    }
+    
+    &.swipeActive::after {
+        opacity: 1;
+    }
+    
+    // Состояние во время слайдинга
+    &.sliding {
+        .slide {
+            will-change: transform, opacity;
+        }
+    }
+}
+
+// Стили для слайдов
+.slide {
+    width: 100%;
+    position: relative;
+    
+    &.currentSlide {
+        position: relative;
+        z-index: 2;
+    }
+    
+    &.nextSlide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
+}
+
+// Анимации выхода текущего слайда
+.slideOutLeft {
+    animation: slideOutToLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slideOutRight {
+    animation: slideOutToRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+// Анимации входа нового слайда
+.slideInLeft {
+    animation: slideInFromLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slideInRight {
+    animation: slideInFromRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+// Keyframes для анимаций
+@keyframes slideOutToLeft {
+    0% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-100%) scale(0.9);
+        opacity: 0;
+    }
+}
+
+@keyframes slideOutToRight {
+    0% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%) scale(0.9);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%) scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%) scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+// Мобильная версия анимаций
+@media (max-width: 768px) {
+    .swipeContainer {
+        // Улучшенная чувствительность свайпа на мобильных - безопасные настройки для iOS
+        touch-action: pan-y;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        
+        /* Мягкие настройки overscroll для предотвращения закрытия приложения */
+        overscroll-behavior: auto;
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: auto;
+        
+        // Более выраженные визуальные эффекты на мобильных
+        &.swipeActive {
+            &::before {
+                background: rgba(0, 0, 0, 0.15);
+            }
+            
+            &::after {
+                background: linear-gradient(
+                    90deg,
+                    rgba(204, 40, 85, 0.5) 0%,
+                    transparent 3%,
+                    transparent 97%,
+                    rgba(204, 40, 85, 0.5) 100%
+                );
+            }
+        }
+        
+        // Оптимизированные анимации для мобильных
+        &.sliding {
+            .slide {
+                // Ускоренные анимации на мобильных
+                &.slideOutLeft,
+                &.slideOutRight,
+                &.slideInLeft,
+                &.slideInRight {
+                    animation-duration: 0.35s;
+                    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                }
+            }
+        }
+    }
+    
+    // Мобильные версии анимаций
+    @keyframes slideOutToLeftMobile {
+        0% {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(-110%) scale(0.95);
+            opacity: 0;
+        }
+    }
+
+    @keyframes slideInFromLeftMobile {
+        0% {
+            transform: translateX(-110%) scale(0.95);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOutToRightMobile {
+        0% {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(110%) scale(0.95);
+            opacity: 0;
+        }
+    }
+
+    @keyframes slideInFromRightMobile {
+        0% {
+            transform: translateX(110%) scale(0.95);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+        }
+    }
+    
+    // Применяем мобильные анимации
+    .swipeContainer.sliding {
+        .slideOutLeft {
+            animation-name: slideOutToLeftMobile;
+        }
+        
+        .slideInLeft {
+            animation-name: slideInFromLeftMobile;
+        }
+        
+        .slideOutRight {
+            animation-name: slideOutToRightMobile;
+        }
+        
+        .slideInRight {
+            animation-name: slideInFromRightMobile;
+        }
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-40px) scale(0.7);
+    }
+    60% {
+        opacity: 0.8;
+        transform: translateY(-50%) translateX(5px) scale(1.05);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0) scale(1);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(40px) scale(0.7);
+    }
+    60% {
+        opacity: 0.8;
+        transform: translateY(-50%) translateX(-5px) scale(1.05);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0) scale(1);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
+
+
+// Стили для анимации свайпа
+.stepsContainer {
+    /* iOS Safari overscroll fixes */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+    
+    /* Предотвращаем жесткий скролл */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    position: relative;
+    will-change: transform, opacity; // Оптимизация для GPU
+    
+    &.swipeAnimating {
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    &.swipeLeft {
+        transform: translateX(-40px);
+        opacity: 0.6;
+    }
+    
+    &.swipeRight {
+        transform: translateX(40px);
+        opacity: 0.6;
+    }
+    
+    // Состояние перетаскивания
+    &.dragging {
+        transition: none !important;
+        cursor: grabbing;
+        
+        .step, .finalResult {
+            filter: brightness(0.95);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+    }
+    
+    // Анимация появления нового слайда
+    .step, .finalResult {
+        animation: slideInFade 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        will-change: transform, opacity; // Оптимизация для GPU
+    }
+}
+
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes slideInFade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    50% {
+        opacity: 0.9;
+        transform: translateY(-2px) scale(1.01);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+// Дополнительные анимации для плавности
+@keyframes slideOutLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-100px) scale(0.9);
+    }
+}
+
+@keyframes slideOutRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100px) scale(0.9);
+    }
+}
+
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+// Оптимизация для свайпов на мобильных
+@media (hover: none) and (pointer: coarse) {
+    .stepsContainer {
+        /* Улучшенная обработка тач-событий */
+        touch-action: pan-x pan-y;
+        -webkit-user-select: none;
+        user-select: none;
+        
+        &.swipeLeft {
+            transform: translateX(-20px);
+            opacity: 0.8;
+        }
+        
+        &.swipeRight {
+            transform: translateX(20px);
+            opacity: 0.8;
+        }
+    }
+    
+    .navButton {
+        /* Улучшенные тач-цели для мобильных */
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+}
+
+
+
+// Стили для анимированной стрелки-указателя
+.guideArrow {
+    position: absolute;
+    bottom: -18px;
+    left: 73%;
+    transform: rotate(-53deg);
+    width: 77px;
+    height: 60px;
+    pointer-events: none;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* iOS Safari overscroll fixes */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+    
+    /* Предотвращаем жесткий скролл */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+
+    
+    .step.visible &,
+    .finalResult & {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .arrowImage {
+        width: 100%;
+        color: #cc2855;
+        filter: drop-shadow(0 0 20px rgba(204, 40, 85, 0.8)) 
+                drop-shadow(0 0 40px rgba(204, 40, 85, 0.4));
+            }
+        }
+
+
+// Стили для заголовка
+.roadmapWrapper h1 {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #cc2855;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 1rem;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+    
+    &.fadeOut {
+        animation: fadeOut 0.5s ease-in-out;
+    }
+}
+
+.roadmapWrapper .subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.5s ease-in-out;
+    
+    &.fadeOut {
+        animation: fadeOut 0.5s ease-in-out;
+    }
+}
+
+// Стили для контента
+.roadmapWrapper .content {
+    max-width: 800px;
+    margin: 0 auto;
+    
+    /* iOS Safari overscroll fixes */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: auto;
+    overscroll-behavior-y: auto;
+    
+    /* Предотвращаем жесткий скролл */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    &.fadeIn {
+        animation: fadeIn 0.8s ease-in-out;
+    }
+}
+
+/* iOS Safari specific fixes для предотвращения закрытия приложения */
+@supports (-webkit-touch-callout: none) {
+  .roadmapWrapper {
+    /* Фиксируем позицию для предотвращения overscroll */
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    
+    /* Отключаем жесткий overscroll */
+    overscroll-behavior: none;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+    
+    /* Настройки для touch событий */
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    
+    /* Предотвращаем жесткий скролл */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .content {
+    /* Обеспечиваем правильный скролл контента */
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    
+    /* Мягкий overscroll */
+    overscroll-behavior: auto;
+    overscroll-behavior-y: auto;
+  }
+  
+  .stepsContainer {
+    /* Предотвращаем жесткий overscroll для контейнера шагов */
+    overscroll-behavior: none;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+    
+    /* Настройки для touch событий */
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+}

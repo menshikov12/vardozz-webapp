@@ -1,0 +1,123 @@
+@font-face {
+  font-family: 'BaseBloom';
+  src: url('../font/BaseBloom.woff') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  font-family: "Unbounded", serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #000000;
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease-in-out infinite;
+
+  --tg-theme-bg-color: #000000;
+  --tg-theme-text-color: rgba(255, 255, 255, 0.87);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  touch-action: manipulation; /* Улучшает поддержку зума на мобильных */
+  transition: all 0.3s ease-in-out;
+  
+  /* iOS Safari overscroll fixes */
+  overscroll-behavior: none;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
+  
+  /* Предотвращаем жесткий скролл на iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* iOS Safari specific fixes для предотвращения закрытия приложения */
+@supports (-webkit-touch-callout: none) {
+  /* Глобальные настройки для предотвращения жесткого overscroll */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Фиксируем body для предотвращения закрытия приложения */
+  body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+  }
+  
+  /* Основной контейнер приложения */
+  #root {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    
+    /* Мягкий overscroll */
+    overscroll-behavior: auto;
+    overscroll-behavior-y: auto;
+    
+    /* Предотвращаем жесткий скролл */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Все скроллируемые контейнеры */
+  .layout, .main, .mainContent, [class*="content"], [class*="Content"] {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: auto;
+    overscroll-behavior-y: auto;
+    
+    /* Предотвращаем жесткий overscroll */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Специальные настройки для Telegram WebApp */
+  .telegram-webapp {
+    height: 100vh;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+  }
+}
+
+h2 {
+  font-size: 1.2em;
+}
+
+h1 {
+  font-size: 1.5em;
+  line-height: 1.1;
+}
