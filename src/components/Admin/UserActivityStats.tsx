@@ -14,10 +14,10 @@ interface ActivityStats {
 }
 
 interface UserActivityStatsProps {
-  onRefresh?: () => void;
+  // Убираем onRefresh prop, так как он вызывал бесконечную перезагрузку
 }
 
-export const UserActivityStats: React.FC<UserActivityStatsProps> = ({ onRefresh }) => {
+export const UserActivityStats: React.FC<UserActivityStatsProps> = () => {
   const [stats, setStats] = useState<ActivityStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,13 +53,6 @@ export const UserActivityStats: React.FC<UserActivityStatsProps> = ({ onRefresh 
   useEffect(() => {
     fetchStats();
   }, []);
-
-  // Обновляем статистику при вызове onRefresh
-  useEffect(() => {
-    if (onRefresh) {
-      fetchStats();
-    }
-  }, [onRefresh]);
 
   const calculatePercentage = (value: number, total: number): number => {
     return total > 0 ? Math.round((value / total) * 100) : 0;
